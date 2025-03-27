@@ -3,506 +3,1838 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Tools Platform</title>
+    <title>AI Tools Pro - Ultimate AI Toolkit</title>
     <style>
-        /* Global Styles */
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff7e5f;
+            --dark-color: #2a2d3b;
+            --light-color: #f8f9ff;
+            --card-color: #ffffff;
+            --text-color: #333333;
+            --text-light: #666666;
+        }
+        
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
         }
         
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #f5f7fa;
-            color: #333;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 20px 0;
+            padding: 1.5rem;
             text-align: center;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
-        h1 {
-            margin: 0;
-            font-size: 2.5rem;
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
         }
         
-        .tagline {
-            font-size: 1.2rem;
+        .header p {
             opacity: 0.9;
+            font-size: 1.1rem;
         }
         
-        /* Navigation */
-        .tabs {
+        /* Auth Container */
+        .auth-container {
             display: flex;
-            justify-content: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
+            min-height: calc(100vh - 82px);
         }
         
-        .tab-btn {
-            padding: 12px 24px;
-            margin: 0 10px;
-            background: none;
-            border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #555;
-        }
-        
-        .tab-btn.active {
-            background: #6e8efb;
+        .auth-left {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            box-shadow: 0 4px 8px rgba(110, 142, 251, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
         }
         
-        /* Tool Containers */
-        .tool-container {
-            display: none;
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
+        .auth-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: 0.1;
         }
         
-        .tool-container.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
+        .auth-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+            max-width: 500px;
+            margin: 0 auto;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .auth-form {
+            background: var(--card-color);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
         
-        .tool-title {
-            color: #6e8efb;
-            margin-top: 0;
-            font-size: 1.8rem;
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
         }
         
-        /* Form Elements */
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
+        .auth-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
             font-weight: 600;
-            color: #555;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
         }
         
-        input[type="text"], input[type="url"], textarea, select {
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .auth-content {
+            display: none;
+        }
+        
+        .auth-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .form-control {
             width: 100%;
-            padding: 12px 15px;
+            padding: 0.75rem;
             border: 1px solid #ddd;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1rem;
             transition: border 0.3s ease;
         }
         
-        input[type="text"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
-            border-color: #6e8efb;
+        .form-control:focus {
+            border-color: var(--primary-color);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2);
         }
         
-        textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
+            width: 100%;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
-        button:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 15px rgba(78, 84, 200, 0.4);
         }
         
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+        .social-login {
+            margin-top: 1.5rem;
+            text-align: center;
         }
         
-        /* Results */
-        .result-container {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 6px;
-            background-color: #f9f9f9;
-            border-left: 4px solid #6e8efb;
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn.google {
+            background: #fff;
+            color: #757575;
+            border: 1px solid #ddd;
+        }
+        
+        .social-btn.facebook {
+            background: #3b5998;
+            color: white;
+            border: none;
+        }
+        
+        .social-btn.apple {
+            background: #000;
+            color: white;
+            border: none;
+        }
+        
+        .social-btn.github {
+            background: #333;
+            color: white;
+            border: none;
+        }
+        
+        .social-btn i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-light);
+        }
+        
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .divider span {
+            padding: 0 1rem;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* Verification Modal */
+        .modal {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
         }
         
-        .result-title {
-            margin-top: 0;
-            color: #555;
+        .modal-content {
+            background: var(--card-color);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
         }
         
-        /* Loading Indicator */
-        .loader {
-            display: none;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #6e8efb;
+        .modal h2 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .modal p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .verification-input {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .verification-input input {
+            width: 40px;
+            height: 50px;
+            margin: 0 5px;
+            text-align: center;
+            font-size: 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: border 0.3s ease;
+        }
+        
+        .verification-input input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        /* Welcome Animation */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(42, 45, 59, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .welcome-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .welcome-content {
+            text-align: center;
+            color: white;
+            transform: scale(0.5);
+            transition: transform 0.5s ease;
+        }
+        
+        .welcome-overlay.active .welcome-content {
+            transform: scale(1);
+        }
+        
+        .welcome-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+        
+        .welcome-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Profile Section */
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-right: 1.5rem;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .profile-info h2 {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
         }
         
-        /* Responsive */
+        .profile-info p {
+            color: var(--text-light);
+        }
+        
+        .profile-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .profile-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .profile-content {
+            display: none;
+        }
+        
+        .profile-content.active {
+            display: block;
+        }
+        
+        /* Main App Container */
+        .app-container {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Tool Cards */
+        .tools-section {
+            margin-top: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 0.75rem;
+            color: var(--primary-color);
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .tool-card {
+            background: var(--card-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+        
+        .tool-card-header {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem 1.5rem 0;
+        }
+        
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .tool-card-content {
+            padding: 1rem 1.5rem 1.5rem;
+            flex: 1;
+        }
+        
+        .tool-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .tool-card p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .tool-card .btn {
+            padding: 0.6rem 1rem;
+            font-size: 0.95rem;
+            margin-top: auto;
+            width: auto;
+            align-self: flex-start;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .tool-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
+            .auth-container {
+                flex-direction: column;
             }
             
-            .tool-container {
-                padding: 20px;
+            .auth-left, .auth-right {
+                flex: none;
             }
             
-            .tab-btn {
-                padding: 10px 15px;
-                margin: 5px;
-                font-size: 0.9rem;
+            .auth-left {
+                padding: 2rem 1rem;
+                text-align: center;
+            }
+            
+            .tool-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>AI Tools Platform</h1>
-            <p class="tagline">Powered by OpenAI API</p>
+    <!-- Header -->
+    <div class="header">
+        <h1>AI Tools Pro</h1>
+        <p>Your Ultimate AI-Powered Toolkit</p>
+    </div>
+
+    <!-- Authentication Container -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-left">
+            <h1 style="font-size: 2.2rem; margin-bottom: 1rem; z-index: 1;">Unlock Powerful AI Tools</h1>
+            <p style="font-size: 1.1rem; opacity: 0.9; z-index: 1;">Access 15+ professional tools to boost your productivity</p>
+            <div style="margin-top: 2rem; z-index: 1;">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Copyright Free Writing</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Keyword Research</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Content Plagiarism Checker</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Image Processing Tools</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Document Conversion</span>
+                </div>
+            </div>
         </div>
-    </header>
+        
+        <div class="auth-right">
+            <div class="auth-form">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" data-tab="login">Sign In</div>
+                    <div class="auth-tab" data-tab="signup">Sign Up</div>
+                </div>
+                
+                <!-- Login Form -->
+                <div class="auth-content active" id="loginForm">
+                    <form id="loginFormElement">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                        <div style="text-align: right; margin-bottom: 1.5rem;">
+                            <a href="#" style="color: var(--primary-color); text-decoration: none;">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn">Sign In</button>
+                    </form>
+                    
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+                    
+                    <div class="social-login">
+                        <button class="social-btn google">
+                            <i class="fab fa-google"></i> Continue with Google
+                        </button>
+                        <button class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i> Continue with Facebook
+                        </button>
+                        <button class="social-btn apple">
+                            <i class="fab fa-apple"></i> Continue with Apple
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Sign Up Form -->
+                <div class="auth-content" id="signupForm">
+                    <form id="signupFormElement">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupEmail">Email</label>
+                            <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" class="form-control" placeholder="Create a password (min 8 characters)" required minlength="8">
+                        </div>
+                        <div class="form-group">
+                            <label for="signupConfirmPassword">Confirm Password</label>
+                            <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required minlength="8">
+                        </div>
+                        <button type="submit" class="btn">Sign Up</button>
+                    </form>
+                    
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools Pro - Ultimate AI Toolkit</title>
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff7e5f;
+            --dark-color: #2a2d3b;
+            --light-color: #f8f9ff;
+            --card-color: #ffffff;
+            --text-color: #333333;
+            --text-light: #666666;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        /* Auth Container */
+        .auth-container {
+            display: flex;
+            min-height: calc(100vh - 82px);
+        }
+        
+        .auth-left {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: 0.1;
+        }
+        
+        .auth-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .auth-form {
+            background: var(--card-color);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .auth-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .auth-content {
+            display: none;
+        }
+        
+        .auth-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 84, 200, 0.4);
+        }
+        
+        .social-login {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn.google {
+            background: #fff;
+            color: #757575;
+            border: 1px solid #ddd;
+        }
+        
+        .social-btn.facebook {
+            background: #3b5998;
+            color: white;
+            border: none;
+        }
+        
+        .social-btn.apple {
+            background: #000;
+            color: white;
+            border: none;
+        }
+        
+        .social-btn.github {
+            background: #333;
+            color: white;
+            border: none;
+        }
+        
+        .social-btn i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-light);
+        }
+        
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .divider span {
+            padding: 0 1rem;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* Verification Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: var(--card-color);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+        
+        .modal h2 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .modal p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .verification-input {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .verification-input input {
+            width: 40px;
+            height: 50px;
+            margin: 0 5px;
+            text-align: center;
+            font-size: 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: border 0.3s ease;
+        }
+        
+        .verification-input input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        /* Welcome Animation */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(42, 45, 59, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .welcome-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .welcome-content {
+            text-align: center;
+            color: white;
+            transform: scale(0.5);
+            transition: transform 0.5s ease;
+        }
+        
+        .welcome-overlay.active .welcome-content {
+            transform: scale(1);
+        }
+        
+        .welcome-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+        
+        .welcome-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Profile Section */
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-right: 1.5rem;
+        }
+        
+        .profile-info h2 {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .profile-info p {
+            color: var(--text-light);
+        }
+        
+        .profile-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .profile-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .profile-content {
+            display: none;
+        }
+        
+        .profile-content.active {
+            display: block;
+        }
+        
+        /* Main App Container */
+        .app-container {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Tool Cards */
+        .tools-section {
+            margin-top: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 0.75rem;
+            color: var(--primary-color);
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .tool-card {
+            background: var(--card-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+        
+        .tool-card-header {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem 1.5rem 0;
+        }
+        
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .tool-card-content {
+            padding: 1rem 1.5rem 1.5rem;
+            flex: 1;
+        }
+        
+        .tool-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .tool-card p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .tool-card .btn {
+            padding: 0.6rem 1rem;
+            font-size: 0.95rem;
+            margin-top: auto;
+            width: auto;
+            align-self: flex-start;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .tool-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+            }
+            
+            .auth-left, .auth-right {
+                flex: none;
+            }
+            
+            .auth-left {
+                padding: 2rem 1rem;
+                text-align: center;
+            }
+            
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>AI Tools Pro</h1>
+        <p>Your Ultimate AI-Powered Toolkit</p>
+    </div>
+
+    <!-- Authentication Container -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-left">
+            <h1 style="font-size: 2.2rem; margin-bottom: 1rem; z-index: 1;">Unlock Powerful AI Tools</h1>
+            <p style="font-size: 1.1rem; opacity: 0.9; z-index: 1;">Access 15+ professional tools to boost your productivity</p>
+            <div style="margin-top: 2rem; z-index: 1;">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Copyright Free Writing</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Keyword Research</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Content Plagiarism Checker</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Image Processing Tools</span>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle" style="margin-right: 0.5rem; color: var(--accent-color);"></i>
+                    <span>Document Conversion</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="auth-right">
+            <div class="auth-form">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" data-tab="login">Sign In</div>
+                    <div class="auth-tab" data-tab="signup">Sign Up</div>
+                </div>
+                
+                <!-- Login Form -->
+                <div class="auth-content active" id="loginForm">
+                    <form id="loginFormElement">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                        <div style="text-align: right; margin-bottom: 1.5rem;">
+                            <a href="#" style="color: var(--primary-color); text-decoration: none;">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn">Sign In</button>
+                    </form>
+                    
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+                    
+                    <div class="social-login">
+                        <button class="social-btn google">
+                            <i class="fab fa-google"></i> Continue with Google
+                        </button>
+                        <button class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i> Continue with Facebook
+                        </button>
+                        <button class="social-btn apple">
+                            <i class="fab fa-apple"></i> Continue with Apple
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Sign Up Form -->
+                <div class="auth-content" id="signupForm">
+                    <form id="signupFormElement">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupEmail">Email</label>
+                            <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" class="form-control" placeholder="Create a password (min 8 characters)" required minlength="8">
+                        </div>
+                        <div class="form-group">
+                            <label for="signupConfirmPassword">Confirm Password</label>
+                            <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required minlength="8">
+                        </div>
+                        <button type="submit" class="btn">Sign Up</button>
+                    </form>
+                    
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+                    
+                    <div class="social-login">
+                        <button class="social-btn google">
+                            <i class="fab fa-google"></i> Continue with Google
+                        </button>
+                        <button class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i> Continue with Facebook
+                        </button>
+                        <button class="social-btn apple">
+                            <i class="fab fa-apple"></i> Continue with Apple
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="auth-footer">
+                    <span id="authFooterText">Don't have an account? <a href="#" id="authToggle">Sign up</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <div class="container">
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="video-summarizer">Video Summarizer</button>
-            <button class="tab-btn" data-tab="resume-builder">Resume Builder</button>
-            <button class="tab-btn" data-tab="voice-assistant">Voice Assistant</button>
-        </div>
-        
-        <!-- Video Summarizer Tool -->
-        <div id="video-summarizer" class="tool-container active">
-            <h2 class="tool-title">Video Summarizer</h2>
-            <p>Get concise summaries of long videos in seconds. Perfect for lectures, meetings, and YouTube videos.</p>
+    <!-- Verification Modal -->
+    <div class="modal" id="verificationModal">
+        <div class="modal-content">
+            <h2>Verify Your Account</h2>
+            <p>We've sent a verification code to your email. Please enter it below:</p>
             
-            <div class="input-group">
-                <label for="video-url">Video URL (YouTube or direct link)</label>
-                <input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..." required>
+            <div class="verification-input">
+                <input type="text" maxlength="1" pattern="\d" required>
+                <input type="text" maxlength="1" pattern="\d" required>
+                <input type="text" maxlength="1" pattern="\d" required>
+                <input type="text" maxlength="1" pattern="\d" required>
+                <input type="text" maxlength="1" pattern="\d" required>
+                <input type="text" maxlength="1" pattern="\d" required>
             </div>
             
-            <div class="input-group">
-                <label for="summary-length">Summary Length</label>
-                <select id="summary-length">
-                    <option value="short">Short (3-5 bullet points)</option>
-                    <option value="medium" selected>Medium (5-7 bullet points)</option>
-                    <option value="detailed">Detailed (full transcript)</option>
+            <button class="btn" id="verifyBtn">Verify</button>
+            <p style="margin-top: 1rem;">Didn't receive code? <a href="#" style="color: var(--primary-color);" id="resendCode">Resend</a></p>
+        </div>
+    </div>
+    
+    <!-- Welcome Overlay -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-content">
+            <h1>Welcome!</h1>
+            <p>Your AI tools adventure begins now</p>
+            <div style="width: 100px; height: 100px; margin: 0 auto; border: 5px solid var(--primary-color); border-radius: 50%; border-top-color: transparent; animation: spin 1s linear infinite;"></div>
+        </div>
+    </div>
+    
+    <!-- Profile Section -->
+    <div class="profile-container" id="profileSection" style="display: none;">
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar">U</div>
+            <div class="profile-info">
+                <h2 id="profileName">User Name</h2>
+                <p id="profileEmail">user@example.com</p>
+            </div>
+        </div>
+        
+        <div class="profile-tabs">
+            <div class="profile-tab active" data-tab="profile">Profile</div>
+            <div class="profile-tab" data-tab="settings">Settings</div>
+            <div class="profile-tab" data-tab="subscription">Subscription</div>
+        </div>
+        
+        <div class="profile-content active" id="profileContent">
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="profileFullName">Full Name</label>
+                    <input type="text" id="profileFullName" class="form-control" value="User Name">
+                </div>
+                <div class="form-group">
+                    <label for="profileEmailInput">Email</label>
+                    <input type="email" id="profileEmailInput" class="form-control" value="user@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="profileCountry">Country</label>
+                    <select id="profileCountry" class="form-control">
+                        <option value="US">United States</option>
+                        <option value="IN" selected>India</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Update Profile</button>
+            </form>
+        </div>
+        
+        <div class="profile-content" id="settingsContent">
+            <h3>Account Settings</h3>
+            <div class="form-group">
+                <label>Change Password</label>
+                <input type="password" class="form-control" placeholder="Current password" style="margin-bottom: 0.5rem;">
+                <input type="password" class="form-control" placeholder="New password" style="margin-bottom: 0.5rem;">
+                <input type="password" class="form-control" placeholder="Confirm new password">
+            </div>
+            <div class="form-group">
+                <label>Two-Factor Authentication</label>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>Enable 2FA for extra security</span>
+                    <label class="switch">
+                        <input type="checkbox" id="twoFactorToggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Language Preference</label>
+                <select class="form-control" id="profileLanguage">
+                    <option value="en" selected>English</option>
+                    <option value="hi">हिन्दी (Hindi)</option>
+                    <option value="es">Español (Spanish)</option>
+                    <option value="fr">Français (French)</option>
                 </select>
             </div>
-            
-            <button id="summarize-btn">Summarize Video</button>
-            <div class="loader" id="video-loader"></div>
-            
-            <div class="result-container" id="video-result">
-                <h3 class="result-title">Video Summary</h3>
-                <div id="video-summary-content"></div>
-            </div>
+            <button class="btn" id="saveSettingsBtn">Save Settings</button>
         </div>
         
-        <!-- Resume Builder Tool -->
-        <div id="resume-builder" class="tool-container">
-            <h2 class="tool-title">AI Resume Builder</h2>
-            <p>Create a professional resume tailored to your dream job in minutes.</p>
-            
-            <div class="input-group">
-                <label for="full-name">Full Name</label>
-                <input type="text" id="full-name" placeholder="Enter your full name" required>
-            </div>
-            
-            <div class="input-group">
-                <label for="job-title">Desired Job Title</label>
-                <input type="text" id="job-title" placeholder="e.g. Software Engineer" required>
-            </div>
-            
-            <div class="input-group">
-                <label for="job-description">Paste Job Description (for customization)</label>
-                <textarea id="job-description" placeholder="Paste the job description here to optimize your resume..."></textarea>
-            </div>
-            
-            <div class="input-group">
-                <label for="work-experience">Your Work Experience</label>
-                <textarea id="work-experience" placeholder="Describe your work experience (1-2 paragraphs)..." required></textarea>
-            </div>
-            
-            <div class="input-group">
-                <label for="skills">Your Skills (comma separated)</label>
-                <input type="text" id="skills" placeholder="e.g. JavaScript, Python, Project Management" required>
-            </div>
-            
-            <button id="generate-resume-btn">Generate Resume</button>
-            <div class="loader" id="resume-loader"></div>
-            
-            <div class="result-container" id="resume-result">
-                <h3 class="result-title">Your Custom Resume</h3>
-                <div id="resume-content"></div>
-                <button id="download-resume-btn" style="margin-top: 15px;">Download as PDF</button>
+        <div class="profile-content" id="subscriptionContent">
+            <h3>Your Subscription</h3>
+            <p>You're currently on the Free plan</p>
+            <div style="background: #f9f9f9; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                <h4>Upgrade to Pro</h4>
+                <p>Get access to all premium features</p>
+                <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                    <li>Unlimited tool usage</li>
+                    <li>Priority support</li>
+                    <li>No ads</li>
+                    <li>Early access to new features</li>
+                </ul>
+                <button class="btn" style="margin-top: 0.5rem;">Upgrade Now ($9.99/month)</button>
             </div>
         </div>
-        
-        <!-- Voice Assistant Tool -->
-        <div id="voice-assistant" class="tool-container">
-            <h2 class="tooltitle">Voice Assistant</h2>
-            <p>Speak naturally in Hindi or English and get instant answers to your questions.</p>
-            
-            <div class="input-group">
-                <label for="assistant-language">Select Language</label>
-                <select id="assistant-language">
-                    <option value="hindi">Hindi</option>
-                    <option value="english" selected>English</option>
-                    <option value="bengali">Bengali</option>
-                    <option value="tamil">Tamil</option>
-                    <option value="telugu">Telugu</option>
-                </select>
+    </div>
+    
+    <!-- Main App Container -->
+    <div class="app-container" id="appContainer">
+        <div class="tools-section">
+            <h2 class="section-title"><i class="fas fa-magic"></i> Writing & Content Tools</h2>
+            <div class="tool-grid">
+                <!-- Writing Tools -->
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <h3>Copyright Free Writing</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Generate unique, plagiarism-free content for blogs, articles, and websites with our AI writer.</p>
+                        <button class="btn try-tool-btn" data-tool="copyright-free-writing">Try Now</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>Keyword Research</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Find high-ranking keywords and analyze search trends to optimize your content for SEO.</p>
+                        <button class="btn try-tool-btn" data-tool="keyword-research">Try Now</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Plagiarism Checker</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Detect duplicate content and ensure your writing is 100% original with our advanced checker.</p>
+                        <button class="btn try-tool-btn" data-tool="plagiarism-checker">Try Now</button>
+                    </div>
+                </div>
             </div>
             
-            <div style="text-align: center; margin: 30px 0;">
-                <button id="start-listening-btn" style="padding: 15px 30px; font-size: 1.2rem;">
-                    <span id="mic-icon">🎤</span> Start Listening
-                </button>
-                <p id="listening-status" style="margin-top: 10px; color: #666;">Press the button and speak</p>
+            <h2 class="section-title"><i class="fas fa-file-alt"></i> Document Tools</h2>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3>PDF Tools</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Merge, split, compress, and convert PDF files with our comprehensive PDF toolkit.</p>
+                        <button class="btn try-tool-btn" data-tool="pdf-tools">Try Now</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-excel"></i>
+                        </div>
+                        <h3>Excel Tools</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Clean, analyze, and visualize your data with powerful Excel automation tools.</p>
+                        <button class="btn try-tool-btn" data-tool="excel-tools">Try Now</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <h3>Document Composer</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Create professional documents, reports, and templates with AI assistance.</p>
+                        <button class="btn try-tool-btn" data-tool="document-composer">Try Now</button>
+                    </div>
+                </div>
             </div>
             
-            <div class="input-group">
-                <label for="voice-query">Or type your question:</label>
-                <input type="text" id="voice-query" placeholder="Ask anything...">
-                <button id="submit-query-btn" style="margin-top: 10px;">Submit</button>
+            <h2 class="section-title"><i class="fas fa-image"></i> Image Tools</h2>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-crop"></i>
+                        </div>
+                        <h3>Image Resizer</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Resize, crop, and optimize images for web and social media with perfect dimensions.</p>
+                        <button class="btn try-tool-btn" data-tool="image-resizer">Try Now</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h3>Photo Enhancer</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Improve photo quality, remove backgrounds, and enhance colors automatically.</p>
+                        <button class="btn try-tool-btn" data-tool="photo-enhancer">Try Now</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Image Converter</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Convert between JPG, PNG, SVG, WEBP and other formats with one click.</p>
+                        <button class="btn try-tool-btn" data-tool="image-converter">Try Now</button>
+                    </div>
+                </div>
             </div>
             
-            <div class="loader" id="voice-loader"></div>
-            
-            <div class="result-container" id="voice-result">
-                <h3 class="result-title">Assistant Response</h3>
-                <div id="assistant-response"></div>
+            <h2 class="section-title"><i class="fas fa-tools"></i> Other Tools</h2>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Video Summarizer</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Extract key points from videos and generate concise summaries automatically.</p>
+                        <button class="btn try-tool-btn" data-tool="video-summarizer">Try Now</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h3>Audio Transcriber</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Convert speech to text with high accuracy for interviews, meetings, and podcasts.</p>
+                        <button class="btn try-tool-btn" data-tool="audio-transcriber">Try Now</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Data Visualizer</h3>
+                    </div>
+                    <div class="tool-card-content">
+                        <p>Transform raw data into beautiful charts, graphs, and interactive dashboards.</p>
+                        <button class="btn try-tool-btn" data-tool="data-visualizer">Try Now</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Tab Switching Functionality
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons and containers
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tool-container').forEach(c => c.classList.remove('active'));
+        // DOM Elements
+        const authContainer = document.getElementById('authContainer');
+        const appContainer = document.getElementById('appContainer');
+        const profileSection = document.getElementById('profileSection');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authContents = document.querySelectorAll('.auth-content');
+        const authToggle = document.getElementById('authToggle');
+        const authFooterText = document.getElementById('authFooterText');
+        const verificationModal = document.getElementById('verificationModal');
+        const welcomeOverlay = document.getElementById('welcomeOverlay');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const resendCode = document.getElementById('resendCode');
+        const loginFormElement = document.getElementById('loginFormElement');
+        const signupFormElement = document.getElementById('signupFormElement');
+        const profileForm = document.getElementById('profileForm');
+        const tryToolBtns = document.querySelectorAll('.try-tool-btn');
+        const languageSelect = document.getElementById('languageSelect');
+        const profileLanguage = document.getElementById('profileLanguage');
+        const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+        const twoFactorToggle = document.getElementById('twoFactorToggle');
+        
+        // Tab Switching
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
                 
-                // Add active class to clicked button
-                btn.classList.add('active');
+                // Update active tab
+                authTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
                 
-                // Show corresponding container
-                const tabId = btn.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
+                // Update active content
+                authContents.forEach(c => c.classList.remove('active'));
+                document.getElementById(`${tabId}Form`).classList.add('active');
+                
+                // Update footer text
+                if (tabId === 'login') {
+                    authFooterText.innerHTML = 'Don\'t have an account? <a href="#" id="authToggle">Sign up</a>';
+                } else {
+                    authFooterText.innerHTML = 'Already have an account? <a href="#" id="authToggle">Sign in</a>';
+                }
             });
         });
         
-        // OpenAI API Configuration
-        const OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"; // Replace with your actual API key
-        const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
-        
-        // Common function to call OpenAI API
-        async function callOpenAI(prompt, maxTokens = 1000) {
-            try {
-                const response = await fetch(OPENAI_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${OPENAI_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: "gpt-3.5-turbo",
-                        messages: [{ role: "user", content: prompt }],
-                        temperature: 0.7,
-                        max_tokens: maxTokens
-                    })
-                });
+        // Toggle between login/signup
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'authToggle') {
+                e.preventDefault();
+                const currentTab = document.querySelector('.auth-tab.active').getAttribute('data-tab');
                 
-                const data = await response.json();
-                return data.choices[0].message.content;
-            } catch (error) {
-                console.error("Error calling OpenAI API:", error);
-                return "Sorry, there was an error processing your request. Please try again.";
+                if (currentTab === 'login') {
+                    document.querySelector('.auth-tab[data-tab="signup"]').click();
+                } else {
+                    document.querySelector('.auth-tab[data-tab="login"]').click();
+                }
             }
+        });
+        
+        // Form Submissions
+        loginFormElement.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simulate login process
+            simulateLogin(email, password);
+        });
+        
+        signupFormElement.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long!');
+                return;
+            }
+            
+            // Show verification modal
+            verificationModal.style.display = 'flex';
+        });
+        
+        // Verify Button
+        verifyBtn.addEventListener('click', () => {
+            // Check if all verification inputs are filled
+            const verificationInputs = document.querySelectorAll('.verification-input input');
+            let allFilled = true;
+            
+            verificationInputs.forEach(input => {
+                if (!input.value) {
+                    allFilled = false;
+                    input.style.borderColor = 'red';
+                } else {
+                    input.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (!allFilled) {
+                alert('Please fill in all verification code digits');
+                return;
+            }
+            
+            // In a real app, you would verify the code here
+            verificationModal.style.display = 'none';
+            
+            // Show welcome animation
+            welcomeOverlay.classList.add('active');
+            
+            // After 3 seconds, proceed to app
+            setTimeout(() => {
+                welcomeOverlay.classList.remove('active');
+                completeSignup();
+            }, 3000);
+        });
+        
+        // Resend Code Button
+        resendCode.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Verification code has been resent to your email');
+        });
+        
+        // Profile Form Submission
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('profileFullName').value;
+            const email = document.getElementById('profileEmailInput').value;
+            const country = document.getElementById('profileCountry').value;
+            
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('profileEmail').textContent = email;
+            document.getElementById('profileAvatar').textContent = name.charAt(0).toUpperCase();
+            
+            alert('Profile updated successfully!');
+        });
+        
+        // Profile Tab Switching
+        document.querySelectorAll('.profile-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Update active tab
+                document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active content
+                document.querySelectorAll('.profile-content').forEach(c => c.classList.remove('active'));
+                document.getElementById(`${tabId}Content`).classList.add('active');
+            });
+        });
+        
+        // Try Tool Buttons
+        tryToolBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tool = btn.getAttribute('data-tool');
+                alert(`Opening ${formatToolName(tool)} tool...`);
+            });
+        });
+        
+        // Language Selector
+        languageSelect.addEventListener('change', (e) => {
+            const lang = e.target.value;
+            alert(`Language changed to ${lang}. In a real app, the interface would now be in the selected language.`);
+        });
+        
+        // Save Settings Button
+        saveSettingsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const lang = profileLanguage.value;
+            const twoFactorEnabled = twoFactorToggle.checked;
+            
+            alert(`Settings saved:\nLanguage: ${lang}\n2FA: ${twoFactorEnabled ? 'Enabled' : 'Disabled'}`);
+        });
+        
+        // Simulate Login Function
+        function simulateLogin(email, password) {
+            // Show verification modal for demo purposes
+            verificationModal.style.display = 'flex';
         }
         
-        // Video Summarizer Functionality
-        document.getElementById('summarize-btn').addEventListener('click', async () => {
-            const videoUrl = document.getElementById('video-url').value;
-            const summaryLength = document.getElementById('summary-length').value;
-            const loader = document.getElementById('video-loader');
-            const resultContainer = document.getElementById('video-result');
-            const summaryContent = document.getElementById('video-summary-content');
+        // Complete Signup Function
+        function completeSignup() {
+            authContainer.style.display = 'none';
+            profileSection.style.display = 'block';
+            appContainer.style.display = 'block';
             
-            if (!videoUrl) {
-                alert('Please enter a video URL');
-                return;
-            }
+            // Set the profile name and email from signup form
+            const signupName = document.getElementById('signupName').value;
+            const signupEmail = document.getElementById('signupEmail').value;
             
-            // Show loading
-            loader.style.display = 'block';
-            resultContainer.style.display = 'none';
-            document.getElementById('summarize-btn').disabled = true;
-            
-            try {
-                // In a real implementation, you would extract the video transcript here
-                // For demo, we'll simulate a transcript
-                const simulatedTranscript = `
-                    This video discusses three main AI tools with future potential. 
-                    First is the video summarizer, which can condense long videos into short summaries. 
-                    Second is the resume builder that helps create ATS-optimized resumes. 
-                    Third is the multilingual voice assistant for Indian languages. 
-                    Each tool is explained with its market potential and technical requirements.
-                `;
+            document.getElementById('profileName').textContent = signupName;
+            document.getElementById('profileFullName').value = signupName;
+            document.getElementById('profileEmail').textContent = signupEmail;
+            document.getElementById('profileEmailInput').value = signupEmail;
+            document.getElementById('profileAvatar').textContent = signupName.charAt(0).toUpperCase();
+        }
+        
+        // Format Tool Name for Display
+        function formatToolName(tool) {
+            return tool.split('-').map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+        
+        // Verification Code Input Handling
+        const verificationInputs = document.querySelectorAll('.verification-input input');
+        verificationInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                // Only allow numbers
+                e.target.value = e.target.value.replace(/\D/g, '');
                 
-                // Create prompt based on selected length
-                let prompt;
-                if (summaryLength === 'short') {
-                    prompt = `Summarize the following video content in 3-5 concise bullet points:\n\n${simulatedTranscript}`;
-                } else if (summaryLength === 'medium') {
-                    prompt = `Summarize the following video content in 5-7 bullet points with key details:\n\n${simulatedTranscript}`;
-                } else {
-                    prompt = `Create a detailed summary of the following video content in paragraph form:\n\n${simulatedTranscript}`;
+                if (e.target.value.length === 1) {
+                    if (index < verificationInputs.length - 1) {
+                        verificationInputs[index + 1].focus();
+                    } else {
+                        verifyBtn.focus();
+                    }
                 }
-                
-                // Call OpenAI API
-                const summary = await callOpenAI(prompt);
-                summaryContent.innerHTML = summary.replace(/\n/g, '<br>');
-                resultContainer.style.display = 'block';
-            } catch (error) {
-                summaryContent.innerHTML = "Error generating summary. Please try again.";
-                resultContainer.style.display = 'block';
-            } finally {
-                loader.style.display = 'none';
-                document.getElementById('summarize-btn').disabled = false;
-            }
-        });
-        
-        // Resume Builder Functionality
-        document.getElementById('generate-resume-btn').addEventListener('click', async () => {
-            const fullName = document.getElementById('full-name').value;
-            const jobTitle = document.getElementById('job-title').value;
-            const workExperience = document.getElementById('work-experience').value;
-            const skills = document.getElementById('skills').value;
-            const jobDescription = document.getElementById('job-description').value;
+            });
             
-            const loader = document.getElementById('resume-loader');
-            const resultContainer = document.getElementById('resume-result');
-            const resumeContent = document.getElementById('resume-content');
-            
-            if (!fullName || !jobTitle || !workExperience || !skills) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            // Show loading
-            loader.style.display = 'block';
-            resultContainer.style.display = 'none';
-            document.getElementById('generate-resume-btn').disabled = true;
-            
-            try {
-                // Create prompt for OpenAI
-                let prompt = `Create a professional resume for ${fullName} applying for ${jobTitle} position. `;
-                prompt += `Work Experience: ${workExperience}. Skills: ${skills}. `;
-                
-                if (jobDescription) {
-                    prompt += `Optimize this resume for the following job description: ${jobDescription}. `;
-                    prompt += `Include relevant keywords from the job description. `;
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value.length === 0) {
+                    if (index > 0) {
+                        verificationInputs[index - 1].focus();
+                    }
                 }
-                
-                prompt += `Format the resume with these sections: Professional Summary, Key Qualifications, Technical Skills. `;
-                prompt += `Make the resume ATS-friendly and professional.`;
-                
-                // Call OpenAI API
-                const resumeText = await callOpenAI(prompt, 1500);
-                
-                // Format the response as HTML
-                resumeContent.innerHTML = `
-                    <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #eee;">
-                        ${resumeText.replace(/\n/g, '<br>')}
-                    </div>
-                `;
-                
-                resultContainer.style.display = 'block';
-            } catch (error) {
-                resumeContent.innerHTML = "Error generating resume. Please try again.";
-                resultContainer.style.display = 'block';
-            } finally {
-                loader.style.display = 'none';
-                document.getElementById('generate-resume-btn').disabled = false;
-            }
+            });
         });
         
-        // Download Resume as PDF (simulated)
-        document.getElementById('download-resume-btn').addEventListener('click', () => {
-            alert('In a production app, this would generate a PDF using libraries like jsPDF or html2pdf.js');
-        });
-        
-        // Voice Assistant Functionality
-        let isListening = false;
-        let recognition;
-        const startListeningBtn = document.getElementById('start-listening-btn');
-        const listeningStatus = document.getElementById('listening-status');
-        const micIcon = document.getElementById('mic-icon');
-        
-        // Initialize speech recognition
-        function initSpeechRecognition() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
-            if (!SpeechRecognition) {
-                alert("Speech recognition not supported in your browser. Try Chrome or Edge.");
-                return;
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === verificationModal) {
+                verificationModal.style.display = 'none';
             }
-            
-            recognition = new SpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            
-            recognition.onstart = function() {
-                isListening = true;
-                micIcon.textContent = '🔴';
-                startListeningBtn.style.background = 'linear-gradient(135deg, #ff5f6d, #ffc371)';
+        });
+    </script>
+</body>
+</html>
